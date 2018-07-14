@@ -81,13 +81,29 @@ public class Project01 {
                         }
                         break;
                     case 3:
-                        System.out.println("Enter Student ID        : ");
+                        System.out.print("\nEnter Student ID        : ");
                         id = objUser.next();
                         
                         try{
                             
-                            String personal = "SELECT * FROM `student` WHERE ID= id";
-                            stmt.executeUpdate(personal);
+                            String personal = "SELECT ID, NAME, AGE, ADDRESS FROM `student`";
+                            rs = stmt.executeQuery(personal);
+
+                            while(rs.next()){
+                                if(id.equals(rs.getString("ID"))){
+                                   
+                                   name = rs.getString("NAME");
+                                   age = rs.getString("AGE");
+                                   address = rs.getString("ADDRESS");
+
+                                       //Display values
+                                   System.out.println("\n-----------------------------------------------");
+                                   System.out.println("\nStudent ID        : " + id);
+                                   System.out.println("Student name      : " + name);
+                                   System.out.println("Student age       : " + age);
+                                   System.out.println("Student address   : " + address);   
+                                }
+                            }                 
                             
                         }catch(Exception e){
                             e.printStackTrace();
