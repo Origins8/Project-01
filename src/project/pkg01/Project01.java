@@ -9,6 +9,7 @@ public class Project01 {
         
         Connection conn = null;
         Statement stmt = null;
+        ResultSet rs = null;
        
         Scanner objUser = new Scanner(System.in); //Create a scanner object called objUser
         
@@ -20,8 +21,6 @@ public class Project01 {
 
         try{
             
-            //Class.forName("com.mysql.jdbc.Driver");//Register JDBC Driver
-            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentmanagementsystem?zeroDateTimeBehavior=convertToNull","root","");//open a connection
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentmanagementsystem","root","");//open a connection
             stmt = conn.createStatement();
             
@@ -59,8 +58,23 @@ public class Project01 {
                     case 2:
                         try{
                             
-                            String all = "SELECT * FROM `student`";
-                            stmt.executeUpdate(all);
+                            String all = "SELECT ID, NAME, AGE, ADDRESS FROM `student`";
+                            rs = stmt.executeQuery(all);
+                            
+                            while(rs.next()){
+                                //Retrieve by column name
+                                id  = rs.getString("ID");
+                                name = rs.getString("NAME");
+                                age = rs.getString("AGE");
+                                address = rs.getString("ADDRESS");
+
+                                //Display values
+                                System.out.println("\nStudent ID        : " + id);
+                                System.out.println("Student name      : " + name);
+                                System.out.println("Student age       : " + age);
+                                System.out.println("Student address   : " + address);
+                                System.out.println("\n-----------------------------------------------\n");
+                            }
                             
                         }catch(Exception e){
                             e.printStackTrace();
