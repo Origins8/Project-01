@@ -21,7 +21,14 @@ public class Project01 {
     }     
     public static void main(String[] args) {
        
-    
+        Scanner objUser = new Scanner(System.in); //Create a scanner object called objUser
+        
+        boolean WrongChoice = false; //User Select wrong option
+        boolean Continuation = true; //User wants to continue the program
+        String decision = null; //User select whether close the program or not
+        boolean wrongDecision = false; //User Select wrong option
+        
+        System.out.println("|||||||||||||||WELCOME TO STUDENT MANAGEMENT SYSTEM|||||||||||||||");
     }
     
 }
