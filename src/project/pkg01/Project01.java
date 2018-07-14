@@ -15,14 +15,14 @@ public class Project01 {
         boolean WrongChoice = false; //User Select wrong option
         boolean Continuation = true; //User wants to continue the program
         String decision = null; //User select whether close the program or not
-        boolean wrongDecision = false; //User Select wrong option
         
         System.out.println("|||||||||||||||WELCOME TO STUDENT MANAGEMENT SYSTEM|||||||||||||||");
 
         try{
             
-            Class.forName("com.mysql.jdbc.Driver");//Register JDBC Driver
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentmanagementsystem?zeroDateTimeBehavior=convertToNull","root","");//open a connection
+            //Class.forName("com.mysql.jdbc.Driver");//Register JDBC Driver
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentmanagementsystem?zeroDateTimeBehavior=convertToNull","root","");//open a connection
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentmanagementsystem","root","");//open a connection
             stmt = conn.createStatement();
             
         }catch(Exception e){
@@ -49,7 +49,7 @@ public class Project01 {
                         
                         try{
                             
-                            String insert = "INSERT INTO student(ID, NAME, AGE, ADDRESS)" + "VALUES ()";
+                            String insert = "INSERT INTO student(ID, NAME, AGE, ADDRESS) VALUES ('" +id+ "','" +name+ "','" +age+ "','" +address+ "')";
                             stmt.executeUpdate(insert);
                             
                         }catch(Exception e){
@@ -72,7 +72,7 @@ public class Project01 {
                         
                         try{
                             
-                            String personal = "SELECT * FROM `student` WHERE ID=id";
+                            String personal = "SELECT * FROM `student` WHERE ID= id";
                             stmt.executeUpdate(personal);
                             
                         }catch(Exception e){
@@ -88,23 +88,12 @@ public class Project01 {
             
             System.out.println("\nDo You want to continue? y-yes / n-No");
             decision = objUser.next();
-                      
-            while(wrongDecision == true){
-             switch (decision) {
-               case "y":
-                   Continuation = true;
-                   wrongDecision = false;
-                   break;
-               case "n":
-                   Continuation = false;
-                   wrongDecision = false;
-                   break;
-               default:
-                   System.out.println("Please enter the correct letter");
-                   wrongDecision = true;
-                   break;
-            }   
-          }
+            
+            if("y".equals(decision)){
+                Continuation = true;
+            }else if("n".equals(decision)){
+                Continuation = false;
+            }
        }  
     }
 }
