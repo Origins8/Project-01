@@ -4,22 +4,11 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Project01 {
-
-       private Connection conn;
-       private Statement stmt;
-       private ResultSet rs;
-
-    public Project01() {
-        try{
-            //Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentmanagementsystem?zeroDateTimeBehavior=convertToNull","root",""); //Make Connection to the Database
-            stmt = conn.createStatement();            
-          }catch(SQLException e){
-            System.err.println(e);
-            e.printStackTrace();
-          }
-    }     
+    
     public static void main(String[] args) {
+        
+        Connection conn = null;
+        Statement stmt = null;
        
         Scanner objUser = new Scanner(System.in); //Create a scanner object called objUser
         
@@ -29,6 +18,16 @@ public class Project01 {
         boolean wrongDecision = false; //User Select wrong option
         
         System.out.println("|||||||||||||||WELCOME TO STUDENT MANAGEMENT SYSTEM|||||||||||||||");
+
+        try{
+            
+            Class.forName("com.mysql.jdbc.Driver");//Register JDBC Driver
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentmanagementsystem?zeroDateTimeBehavior=convertToNull","root","");//open a connection
+            stmt = conn.createStatement();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
          while(Continuation == true){
             
@@ -39,7 +38,7 @@ public class Project01 {
 
                 switch (UserChoice) {
                     case 1:
-                        System.out.print("\nEnter Student ID       : ");
+                        System.out.print("\nEnter Student ID        : ");
                         String id = objUser.next();
                         System.out.print("Enter Student name      : ");
                         String name = objUser.next();
@@ -48,20 +47,37 @@ public class Project01 {
                         System.out.print("Enter Student address   : ");
                         String address = objUser.next();
                         
-                        String insert = "INSERT INTO student(ID, NAME, AGE, ADDRESS)" + "VALUES (?,?,?,?)";
-                
+                        try{
+                            
+                            String insert = "INSERT INTO student(ID, NAME, AGE, ADDRESS)" + "VALUES ()";
+                            stmt.executeUpdate(insert);
+                            
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                         break;
                     case 2:
-                        
-                        String all = "SELECT * FROM `student`";
-
+                        try{
+                            
+                            String all = "SELECT * FROM `student`";
+                            stmt.executeUpdate(all);
+                            
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                         break;
                     case 3:
-                        
                         System.out.println("Enter Student ID        : ");
                         id = objUser.next();
-                        String personal = "SELECT * FROM `student` WHERE ID=id";
-                
+                        
+                        try{
+                            
+                            String personal = "SELECT * FROM `student` WHERE ID=id";
+                            stmt.executeUpdate(personal);
+                            
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }   
                         break;
                     default:
                         System.out.println("Sorry your choice of action is incorrect. Please try again!");
@@ -72,8 +88,7 @@ public class Project01 {
             
             System.out.println("\nDo You want to continue? y-yes / n-No");
             decision = objUser.next();
-            
-            
+                      
             while(wrongDecision == true){
              switch (decision) {
                case "y":
